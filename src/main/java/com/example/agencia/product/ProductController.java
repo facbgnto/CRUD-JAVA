@@ -1,12 +1,11 @@
 package com.example.agencia.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 
@@ -22,12 +21,23 @@ public class ProductController {
 
     @GetMapping
     public List<Product> getProducts(){
+
         return productService.getProducts();
     }
 
     @PostMapping
-    public void registrarProducto(Product product){
-       this.productService.newProduct(product);
+    public ResponseEntity<Object> registrarProducto(@RequestBody Product product){
+       return this.productService.newProduct(product);
+    }
+  @PutMapping
+    public ResponseEntity<Object> actualizarProducto(@RequestBody Product product){
+
+       return this.productService.newProduct(product);
+    }
+
+    @DeleteMapping(path = "{productId}")
+    public ResponseEntity<Object> eliminar(@PathVariable("productId") Long id){
+       return this.productService.deleteProduct(id);
     }
 
 }
